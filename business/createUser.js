@@ -9,6 +9,7 @@ const createUser = async (body) => {
     await insertDB(document);
     return Promise.resolve({
       status: 200,
+      userId: document.userId,
       message: "successfully inserted user into db",
     });
   } catch (err) {

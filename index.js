@@ -14,8 +14,8 @@ app.get("/api", (req, res) => {
 app.get("/api/:userId", async (req, res) => {
   try {
     const id = req.params.userId;
-    const fetchedDocument = await fetchUser(id);
-    res.status(200).send(fetchedDocument);
+    const response = await fetchUser(id);
+    res.status(response.status).send(response.document);
   } catch (err) {
     res.status(err.status).send(err.message);
   }
@@ -24,8 +24,8 @@ app.get("/api/:userId", async (req, res) => {
 app.post("/api", async (req, res) => {
   const body = req.body;
   try {
-    const response = createUser(body);
-    res.status(200).send(response.message);
+    const response = await createUser(body);
+    res.status(response.status).send(response.message);
   } catch (err) {
     res.status(err.status).send(err.message);
   }
