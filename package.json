@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "jest"
+    "test": "jest --json --config=./tests/config/jest.config.js --runInBand --forceExit --verbose --detectOpenHandles --coverage tests/unit"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@shelf/jest-mongodb": "^2.1.0",
     "dotenv": "^10.0.0",
     "jest": "^27.3.1",
+    "jest-sonar-reporter": "^2.0.0",
     "nodemon": "^2.0.14"
   },
   "dependencies": {
