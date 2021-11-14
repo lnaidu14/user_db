@@ -13,8 +13,8 @@ describe("testing validateBody", () => {
     try {
       validateBody(body);
     } catch (err) {
-      expect(err.message).toBe(errorMessages.createUser.name);
-      expect(err.status).toBe(statusConstants.error.bad_request);
+      expect(err.message).toEqual(errorMessages.createUser.name);
+      expect(err.status).toEqual(statusConstants.error.bad_request);
     }
   });
 
@@ -26,8 +26,8 @@ describe("testing validateBody", () => {
     try {
       validateBody(body);
     } catch (err) {
-      expect(err.message).toBe(errorMessages.createUser.name);
-      expect(err.status).toBe(statusConstants.error.bad_request);
+      expect(err.message).toEqual(errorMessages.createUser.name);
+      expect(err.status).toEqual(statusConstants.error.bad_request);
     }
   });
 
@@ -35,8 +35,8 @@ describe("testing validateBody", () => {
     try {
       validateBody({});
     } catch (err) {
-      expect(err.message).toBe(errorMessages.createUser.name);
-      expect(err.status).toBe(statusConstants.error.bad_request);
+      expect(err.message).toEqual(errorMessages.createUser.name);
+      expect(err.status).toEqual(statusConstants.error.bad_request);
     }
   });
 
@@ -54,21 +54,17 @@ describe("testing validateBody", () => {
 });
 
 describe("testing insertDB", () => {
-  it("should return an error if firstName is not present in body", async () => {
+  it("should successfully add document into db", async () => {
     const body = {
       userId: v4(),
       firstName: "firstName",
       lastName: "lastName",
     };
 
-    try {
-      await insertDB(body);
-      const document = await fetchDocument({ userId: body.userId });
-      expect(document.userId).toBe(body.userId);
-      expect(document.firstName).toBe(body.firstName);
-      expect(document.lastName).toBe(body.lastName);
-    } catch (err) {
-      console.log("Mongo error test: ", err);
-    }
+    await insertDB(body);
+    const document = await fetchDocument({ userId: body.userId });
+    expect(document.userId).toEqual(body.userId);
+    expect(document.firstName).toEqual(body.firstName);
+    expect(document.lastName).toEqual(body.lastName);
   });
 });
