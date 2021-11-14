@@ -1,5 +1,10 @@
 const router = require("express").Router();
-const { createUser, fetchUser, deleteUser } = require("../business/index");
+const {
+  createUser,
+  fetchUser,
+  deleteUser,
+  updateUser,
+} = require("../business/index");
 
 // Handling routes
 // Test endpoint
@@ -29,10 +34,23 @@ router.post("", async (req, res) => {
   }
 });
 
+// Deleting users
 router.delete("/:userId", async (req, res) => {
   try {
     const id = req.params.userId;
     const response = await deleteUser(id);
+    res.status(response.status).send(response.message);
+  } catch (err) {
+    res.status(err.status).send(err.message);
+  }
+});
+
+// Updating users
+router.put("/:userId", async (req, res) => {
+  try {
+    const id = req.params.userId;
+    const body = req.body;
+    const response = await updateUser(id, body);
     res.status(response.status).send(response.message);
   } catch (err) {
     res.status(err.status).send(err.message);
