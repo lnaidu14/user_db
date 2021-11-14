@@ -1,10 +1,10 @@
 const { v4 } = require("uuid");
 
-const prepareDocument = (body) => {
+const prepareDocument = (body, replace) => {
   return {
     userId: body.userId || v4(),
-    firstName: body.firstName,
-    lastName: body.lastName,
+    firstName: replace.firstName || body.firstName,
+    lastName: replace.lastName || body.lastName,
   };
 };
 

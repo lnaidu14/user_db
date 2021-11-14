@@ -120,7 +120,7 @@ const updateDB = async (query, body) => {
 
     let collection = db.collection(process.env.COLLECTION_NAME);
 
-    return await collection.updateOne(query, body);
+    return await collection.updateOne(query, { $set: body });
   } catch (err) {
     throw {
       status: 500,
