@@ -16,8 +16,8 @@ const updateUser = async (id, body) => {
       };
 
     validateBody(body);
-    const preparedDocument = prepareDocument(document, body);
-    await updateDB({ userId: id }, preparedDocument);
+    body.userId = document.userId;
+    await updateDB({ userId: id }, body);
 
     return Promise.resolve({
       status: 200,
