@@ -1,3 +1,5 @@
+const errorMessages = require("../common/errorMessages");
+const statusConstants = require("../common/statusConstants");
 const { fetchDocument } = require("../helpers/db");
 
 const fetchUser = async (id) => {
@@ -5,8 +7,8 @@ const fetchUser = async (id) => {
     const document = await fetchDocument({ userId: id });
     if (!document)
       throw {
-        status: 404,
-        message: "user not found",
+        status: statusConstants.error.not_found,
+        message: errorMessages.fetchUser.not_found,
       };
 
     return Promise.resolve({
