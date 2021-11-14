@@ -1,8 +1,7 @@
-const errorMessages = require("../common/errorMessages");
-const statusConstants = require("../common/statusConstants");
-const { fetchDB } = require("../helpers/db");
+const { fetchDB, deleteDB } = require("../helpers/db");
+const { errorMessages, statusConstants } = require("../common/index");
 
-const fetchUser = async (id) => {
+const deleteUser = async (id) => {
   try {
     const document = await fetchDB({ userId: id });
     if (!document)
@@ -11,9 +10,11 @@ const fetchUser = async (id) => {
         message: errorMessages.fetchUser.not_found,
       };
 
+    await deleteDB({ userId: id });
+
     return Promise.resolve({
       status: 200,
-      document,
+      message: "user deleted successfully",
     });
   } catch (err) {
     throw err;
@@ -21,5 +22,5 @@ const fetchUser = async (id) => {
 };
 
 module.exports = {
-  fetchUser,
+  deleteUser,
 };

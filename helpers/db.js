@@ -35,7 +35,7 @@ const insertDB = async (body) => {
   }
 };
 
-const fetchDocument = async (query) => {
+const fetchDB = async (query) => {
   // Always await the connection to the client,
   // otherwise it might connect slowly and you'll never fetch the document
   const client = await MongoClient.connect(url, {
@@ -67,7 +67,40 @@ const fetchDocument = async (query) => {
   }
 };
 
+const deleteDB = async (query) => {
+  // Always await the connection to the client,
+  // otherwise it might connect slowly and you'll never fetch the document
+  const client = await MongoClient.connect(url, {
+    useNewUrlParser: true,
+  }).catch((err) => {
+    throw {
+      status: 500,
+      message: "error connecting to mongo client",
+    };
+  });
+
+  if (!client) {
+    return;
+  }
+
+  try {
+    const db = client.db(process.env.DB_NAME);
+
+    let collection = db.collection(process.env.COLLECTION_NAME);
+
+    return await collection.deleteOne(query);
+  } catch (err) {
+    throw {
+      status: 500,
+      message: "error in finding document in mongo",
+    };
+  } finally {
+    client.close();
+  }
+};
+
 module.exports = {
   insertDB,
-  fetchDocument,
+  fetchDB,
+  deleteDB,
 };
